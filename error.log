@@ -1,0 +1,14 @@
+
+> cms-backend@1.0.0 start
+> node server.js
+
+file:///C:/Users/ASUS/Desktop/Winter%20PeP/cms-backend/app.js:5
+import artifactRoutes from "./routes/artifact.route.js";
+       ^^^^^^^^^^^^^^
+SyntaxError: The requested module './routes/artifact.route.js' does not provide an export named 'default'
+    at ModuleJob._instantiate (node:internal/modules/esm/module_job:228:21)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:337:5)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v22.20.0
