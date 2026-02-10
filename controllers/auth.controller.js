@@ -29,12 +29,13 @@ export const initiateSignup = async (req, res) => {
     });
   }
 };
+
 /**
  * POST /auth/signup/verify
  */
 export const verifySignupOtp = async (req, res) => {
   try {
-    const { email, otp, name, password,role } = req.body;
+    const { email, otp, name, password, role } = req.body;
 
     if (!email || !otp || !name || !password) {
       return res.status(400).json({
@@ -78,10 +79,17 @@ export const login = async (req, res) => {
 
     const result = await loginService(email, password);
 
+    res.cookie("token", result.token, {
+      httpOnly: true,
+      secure: false, //true in production(https)
+      sameSite: "lax",
+      maxAge: 60 * 60 * 1000 //1 hour
+    })
+
     res.status(200).json({
       success: true,
       message: "Login successful",
-      ...result
+      user:result.user
     });
   } catch (error) {
     res.status(401).json({
@@ -92,8 +100,8 @@ export const login = async (req, res) => {
 };
 
 
-// //cookies version  
 
 
+// //cookies version 
 
 

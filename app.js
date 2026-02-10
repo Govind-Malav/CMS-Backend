@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import authRoutes from "./routes/auth.routes.js";
-// import artifactRoutes from "./routes/artifact.route.js";
+import artifactRoutes from "./routes/artifact.route.js";
 import cookieParser from "cookie-parser";
 const app = express();
 
@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRoutes);
-// app.use("/artifacts", artifactRoutes);
+app.use("/artifacts", artifactRoutes);
 export default app;
 
 
