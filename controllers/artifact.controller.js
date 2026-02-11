@@ -1,4 +1,4 @@
-import { createArtifactService } from "../services/artifact.service.js";
+import { createArtifactService,getArtifactsService } from "../services/artifact.service.js";
 
 export const createArtifact = async (req, res) => {
     try {
