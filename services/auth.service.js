@@ -3,6 +3,7 @@ import OTP from "../models/otp.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+
 export const initiateSignupService = async (email) => {
     const existingUser = await User.findOne({ email });
     if (existingUser) {

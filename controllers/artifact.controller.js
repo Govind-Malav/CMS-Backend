@@ -5,7 +5,8 @@ export const createArtifact = async (req, res) => {
         const artifact = await createArtifactService({
             title: req.body.title,
             content: req.body.content,
-            userId: req.user.id
+            userId: req.user.id,
+            filepath: req.file.path
         })
         res.status(201).json({
             success: true,
@@ -19,3 +20,19 @@ export const createArtifact = async (req, res) => {
         })
     }
 }
+
+export const getArtifacts = async (req, res) => {
+    try {
+        const artifacts = await getArtifactsService(req.user.id);
+        res.status(200).json({
+            success: true,
+            artifacts
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: error.message
+        })
+    }
+}
+
