@@ -40,4 +40,4 @@ export const getArtifactsService = async ({ userId, role }) => {
   return await Artifact.find({ author: userId });
 };
 
-
+console.log("heyy")
