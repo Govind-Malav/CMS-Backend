@@ -8,7 +8,7 @@ import cookieParser from "cookie-parser";
 import commentRoutes from "./routes/comment.route.js";
 import fs from "fs";
 import webhookRoutes from "./webhook/webhooks.js";
-
+import chatsRoutes from "./routes/chats.route.js"
 const app = express();
 
 /* Middlewares */
@@ -34,6 +34,7 @@ app.use("/auth", authRoutes);
 app.use("/artifacts", artifactRoutes);
 app.use("/likes", likesRoutes);
 app.use("/comments", commentRoutes);
+app.use("/chat",chatsRoutes)
 export default app;
 
 

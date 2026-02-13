@@ -3,9 +3,7 @@ import {
   verifySignupOtpService,
   loginService
 } from "../services/auth.service.js";
-/**
- * POST /auth/signup/initiate
- */
+
 export const initiateSignup = async (req, res) => {
   try {
     const { email } = req.body;
@@ -30,9 +28,7 @@ export const initiateSignup = async (req, res) => {
   }
 };
 
-/**
- * POST /auth/signup/verify
- */
+/
 export const verifySignupOtp = async (req, res) => {
   try {
     const { email, otp, name, password, role } = req.body;
@@ -81,9 +77,9 @@ export const login = async (req, res) => {
 
     res.cookie("token", result.token, {
       httpOnly: true,
-      secure: false, //true in production(https)
+      secure: false, 
       sameSite: "lax",
-      maxAge: 60 * 60 * 1000 //1 hour
+      maxAge: 60 * 60 * 1000 
     })
 
     res.status(200).json({
@@ -98,10 +94,5 @@ export const login = async (req, res) => {
     });
   }
 };
-
-
-
-
-// //cookies version 
 
 
