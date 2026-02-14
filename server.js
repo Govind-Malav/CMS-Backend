@@ -3,6 +3,8 @@ dotenv.config();
 
 import app from "./app.js";
 import connectDB from "./config/db.js";
+import { Server } from "socket.io";
+import { registerSocketHandlers } from "./sockets/socket.js";
 
 const PORT = process.env.PORT || 3000;
 
@@ -16,6 +18,12 @@ const io=new Server(server,{
   }
 })
 
-app.listen(PORT, () => {
+// app.listen(PORT, () => {
+//   console.log(`Server running on port ${PORT}`);
+// });
+
+registerSocketHandlers(io);
+
+server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
