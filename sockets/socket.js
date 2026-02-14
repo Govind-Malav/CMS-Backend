@@ -1,51 +1,60 @@
-import { sendChatService } from "../services/chat.service";
+import { sendChatService } from "../services/chat.service.js";
 
-export const registerSocketHandlers = (io) =>{
-    const onlineUsers = new Map();
+export const registerSocketHandlers = (io) => {
 
-    io.on("connection",(socket)=>{
-        console.log("User Connected:",socket.id);
+  const onlineUsers = new Map();
 
-        socket.on("user-online",(userId)=>{
-            onlineUsers.set(userId,socket.id);
+  io.on("connection", (socket) => {
+    console.log("User connected:", socket.id);
 
-            console.log("Online Users:",onlineUsers)
-        });
+    socket.on("user-online", (userId) => {
 
-        socket.on("send-message",async (data)=>{
-            try{
-                let {senderId, receiverId, message} = data;
+      onlineUsers.set(userId, socket.id);
 
-                if(!senderId || !receiverId || !message){
-                    return;
-                }
+      console.log("Online Users:", onlineUsers);
+    });
 
-                let chat = await sendChatService({
-                    senderId,
-                    receiverId,
-                    message
-                });
+    socket.on("send-message", async (data) => {
 
-                let receiverSocketId = onlineUsers.get(receiverId);
-                if(receiverSocketId){
-                    io.to(receiverSocketId).emit("received-message",data.message);
-                }
+      try {
+        const { senderId, receiverId, message } = data;
 
-                socket.emit("sent-message",data.message);
+        if (!senderId || !receiverId || !message) {
+          return;
+        }
 
-            }catch(error){
-                console.log("Socket-error:",error.message)
-            }
-        })
+        
 
-        socket.on("disconnect", async()=>{
-            for(let [userId, sockId] in onlineUsers.getEntries()){
-                if(sockId === socket.id){
-                    onlineUsers.delete(userId);
-                    break;
-                }
-            }
-        })
+        // const chat = await sendChatService({
+        //   senderId,
+        //   receiverId,
+        //   message
+        // });
 
-    })
-}
+        const receiverSocketId = onlineUsers.get(receiverId);
+
+        if (receiverSocketId) {
+          io.to(receiverSocketId).emit("receive-message", data);
+        }
+
+        socket.emit("message-sent", data);
+
+      } catch (error) {
+        console.log("Socket error:", error.message);
+      }
+
+    });
+    socket.on("disconnect", () => {
+
+      for (let [userId, sockId] of onlineUsers.entries()) {
+        if (sockId === socket.id) {
+          onlineUsers.delete(userId);
+          break;
+        }
+      }
+
+      console.log("User disconnected:", socket.id);
+    });
+
+  });
+};
