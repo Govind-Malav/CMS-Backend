@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import http from "http";
 dotenv.config();
 
 import app from "./app.js";
@@ -10,11 +11,11 @@ const PORT = process.env.PORT || 3000;
 
 connectDB();
 
-const server=http.createServer(app);
-const io=new Server(server,{
-  cors:{
-    origin:"*",
-    credentials:true
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    credentials: true
   }
 })
 
